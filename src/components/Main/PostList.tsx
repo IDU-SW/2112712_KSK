@@ -2,6 +2,9 @@ import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import PostItem from './PostItem'
 import { PostListItemType } from '../../types/PostItem.types'
+import useInfiniteScroll, {
+  useInfiniteScrollType,
+} from '../../hooks/useInfiniteScroll'
 
 export type PostType = {
   node: {
@@ -19,10 +22,11 @@ export type PostType = {
 }
 
 type PostListProps = {
+  selectedCategory: string
   posts: PostListItemType[]
 }
 
-  const PostListWrapper = styled.div`
+const PostListWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
@@ -37,22 +41,22 @@ type PostListProps = {
   }
 `
 
-const PostList: FunctionComponent<PostListProps> = function ({posts}) {
+const PostList: FunctionComponent<PostListProps> = function ({
+  selectedCategory,
+  posts, 
+  }) {
+    const { containerRef, postList }: useInfiniteScrollType = useInfiniteScroll(
+        selectedCategory,
+        posts,
+      )
+
     return (
-    <PostListWrapper>
-      {posts.map(
-        ({
-          node: { id, frontmatter },
-        }: PostType) => (
-          <PostItem
-            {...frontmatter}
-            link="https://www.google.co.kr/"
-            key={id}
-            />
-        ),
-      )}
+    <PostListWrapper ref={containerRef}>
+      {postList.map(({ node: { id, frontmatter } }: PostListItemType) => (
+          <PostItem {...frontmatter} link="https://www.google.co.kr/" key={id} />
+        ))}
     </PostListWrapper>
-    );
+    )
 }
 
 export default PostList
