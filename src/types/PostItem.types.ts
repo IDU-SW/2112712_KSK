@@ -9,12 +9,24 @@ export type PostFrontmatterType = {
         childImageSharp: {
             gatsbyImageData: IGatsbyImageData
         }
+
+        pubicURL: string
     }
 }
 
 export type PostListItemType = {
     node: {
         id: string
+        fields: {
+            slug: string
+        }
         frontmatter: PostFrontmatterType
+    }
+}
+
+export type PostPageItemType = {
+    node: {
+        html: string
+        fromtmatter: PostFrontmatterType
     }
 }
