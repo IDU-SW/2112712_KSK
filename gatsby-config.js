@@ -36,6 +36,9 @@ module.exports = {
           formats: ['auto', 'webp'],
           quality: 100,
           placeholder: 'blurred',
+          transformOptions: {
+            fit: 'COVER',
+          },
         }
       }
     },
@@ -63,6 +66,7 @@ module.exports = {
               maxWidth: 768,
               quality: 100,
               withWebp: true,
+              wrapperStyle: () => '',
             },
           },
           {
@@ -77,6 +81,20 @@ module.exports = {
             },
           },
         ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-canonical-urls',
+      options: {
+        siteUrl: 'https://hd152534.github.io/',
+        stripQueryString: true,
+      },
+    },
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        policy: [{ userAgent: '*', allow: '/' }],
       },
     },
   ],
